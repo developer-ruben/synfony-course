@@ -4,9 +4,13 @@
 
 {% block body %}
 <div class="mb-4">
-<img class="mb-4" src="/uploads/{{ post.image }}" alt="">
+{% if post.image is defined %}
+    <img class="mb-4" src="/uploads/{{ post.image }}" alt="">
+{% endif %}
 <h1>{{post.title}}</h1>
-<small>Category: {{post.category_name}}</small>
+<small>Category: {% if post.category is not empty %}
+   {{ post.category}}
+{% else %} No category {% endif %}</small>
 </div>
 <p class="mb-4">
 {{post.body}}
