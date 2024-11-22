@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Create Post</h1>
+{{form(form)}}
+<hr>
+<a href="{{ path('post.index') }}">Back to posts</a>
+{% endblock %}
