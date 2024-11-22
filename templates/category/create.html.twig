@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Category{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Create Category</h1>
+{{form(form)}}
+<hr>
+<a href="{{ path('category.index') }}">Back to categories</a>
+{% endblock %}

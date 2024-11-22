@@ -3,9 +3,14 @@
 {% block title %}Hello PostController!{% endblock %}
 
 {% block body %}
+<div class="mb-4">
 <img class="mb-4" src="/uploads/{{ post.image }}" alt="">
 <h1>{{post.title}}</h1>
 <small>Category: {{post.category_name}}</small>
+</div>
+<p class="mb-4">
+{{post.body}}
+</p>
 <hr>
 <a href="{{ path('post.index') }}">Back to posts</a>
 {% endblock %}

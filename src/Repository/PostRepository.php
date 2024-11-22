@@ -21,6 +21,7 @@ class PostRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p');
         $qb->select('p.title')
             ->addSelect('p.image')
+            ->addSelect('p.body')
             ->addSelect('p.id AS post_id')
             ->addSelect('c.name AS category_name ')
             ->addSelect('c.id AS category_id')
