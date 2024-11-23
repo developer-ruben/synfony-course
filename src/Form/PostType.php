@@ -21,7 +21,7 @@ class PostType extends AbstractType
             ->add('title', TextType::class, ['attr' => ['class' => 'form-control mb-2'], 'required' => false])
             ->add('category', EntityType::class,  ['class' => Category::class, 'attr' => ['class' => 'form-control mb-2']])
             ->add('body', TextareaType::class, ['attr' => ['class' => 'form-control mb-2']])
-            ->add('image', FileType::class, ['attr' => ['class' => 'form-control mb-2']])
+            ->add('image', FileType::class, ['attr' => ['class' => 'form-control mb-2'], 'data_class' => null, 'required' => false, 'mapped' => false])
             ->add('Save', SubmitType::class,[
                 'attr' => ['class' => 'btn btn-primary']
             ])

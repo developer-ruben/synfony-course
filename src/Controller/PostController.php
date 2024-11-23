@@ -34,6 +34,42 @@ class PostController extends AbstractController
         ]);
     }
 
+        #[Route('/{id}/edit', name: 'edit')]
+    public function edit(Request $request, PostRepository $postRepository, $id): Response
+    {
+        $post = $postRepository->find($id);
+
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+        
+            $file = $form->get('image')->getData();
+
+            if($file){
+                if(file_exists($this->fileUploader->getFilePath($post->getImage()))){
+                    unlink($this->fileUploader->getFilePath($post->getImage()));
+                }
+                
+                $fileName = $this->fileUploader->uploadFile($file);
+                
+                $post->setImage($fileName);
+            }
+
+
+            $this->em->flush();
+
+            $this->addFlash('success', 'Your post has been updated');
+
+            return $this->redirectToRoute('post.index');
+        }
+
+        return $this->render('post/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
 
     #[Route('/create', name: 'create')]
     public function create(Request $request): Response

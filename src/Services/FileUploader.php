@@ -20,6 +20,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
         }
 
         public function removeFile(string $fileName){
-            unlink($this->projectDir.'/public/uploads/' . $fileName);
+            unlink($this->getFilePath($fileName));
+        }
+
+        public function getFilePath($fileName)
+        {
+            return $this->projectDir.'/public/uploads/' . $fileName;
         }
     }

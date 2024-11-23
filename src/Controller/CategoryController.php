@@ -31,6 +31,30 @@ class CategoryController extends AbstractController
         ]);
     }
 
+          #[Route('/{id}/edit', name: 'edit')]
+    public function edit(Request $request, CategoryRepository $categoryRepository, $id): Response
+    {
+        $category = $categoryRepository->find($id);
+
+        $form = $this->createForm(CategoryType::class, $category);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+    
+            $this->em->persist($category);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Your category has been updated');
+
+            return $this->redirectToRoute('category.index');
+        }
+
+        return $this->render('category/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
         #[Route('/create', name: 'create')]
     public function create(Request $request): Response
     {
