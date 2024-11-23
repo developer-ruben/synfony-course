@@ -22,15 +22,15 @@
       <ul class="navbar-nav me-auto">
         {%  if is_granted('ROLE_USER') %}
  <li class="nav-item">
-          <a class="nav-link active" href="{{ path('home') }}">Home
+          <a class="nav-link {{ app.request.pathinfo == '/' ? 'active' : '' }}" href="{{ path('home') }}">Home
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ path('post.index') }}">Posts</a>
+          <a class="nav-link {{ app.request.pathinfo == '/post/' ? 'active' : '' }}" href="{{ path('post.index') }}">Posts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ path('category.index') }}">Categories</a>
+          <a class="nav-link {{ app.request.pathinfo == '/category/' ? 'active' : '' }}" href="{{ path('category.index') }}">Categories</a>
         </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
