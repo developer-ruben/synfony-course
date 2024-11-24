@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tag{% endblock %}
+
+{% block body %}
+<h1 class="mb-4">Edit Tag</h1>
+{{form(form)}}
+<hr>
+<a href="{{ path('tag.index') }}">Back to tags</a>
+{% endblock %}

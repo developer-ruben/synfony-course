@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Tag;
 use App\Form\CategoryType;
+use App\Form\TagType;
 use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/category', name:'category.')]
-class CategoryController extends AbstractController
+#[Route('/tag', name:'tag.')]
+class TagController extends AbstractController
 {
     private $em;
 
@@ -22,60 +25,60 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/', name: 'index')]
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(TagRepository $tagRepository): Response
     {
-        $categories = $categoryRepository->findAll();
+        $tags = $tagRepository->findAll();
 
-        return $this->render('category/index.html.twig', [
-            'categories' => $categories,
+        return $this->render('tag/index.html.twig', [
+            'tags' => $tags,
         ]);
     }
 
           #[Route('/{id}/edit', name: 'edit')]
-    public function edit(Request $request, CategoryRepository $categoryRepository, $id): Response
+    public function edit(Request $request, TagRepository $tagRepository, $id): Response
     {
-        $category = $categoryRepository->find($id);
+        $tag = $tagRepository->find($id);
 
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(TagType::class, $tag);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
     
-            $this->em->persist($category);
+            $this->em->persist($tag);
             $this->em->flush();
 
-            $this->addFlash('success', 'Your category has been updated');
+            $this->addFlash('success', 'Your tag has been updated');
 
-            return $this->redirectToRoute('category.index');
+            return $this->redirectToRoute('tag.index');
         }
 
-        return $this->render('category/edit.html.twig', [
+        return $this->render('tag/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
-        #[Route('/create', name: 'create')]
+    #[Route('/create', name: 'create')]
     public function create(Request $request): Response
     {
-        $category = new Category();
+        $tag = new Tag();
 
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(TagType::class, $tag);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
     
 
-            $this->em->persist($category);
+            $this->em->persist($tag);
             $this->em->flush();
 
-            $this->addFlash('success', 'Your category has been created');
+            $this->addFlash('success', 'Your tag has been created');
 
-            return $this->redirectToRoute('category.index');
+            return $this->redirectToRoute('tag.index');
         }
 
-        return $this->render('category/create.html.twig', [
+        return $this->render('tag/create.html.twig', [
             'form' => $form->createView()
         ]);
     }
