@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Category
 {
     #[ORM\Id]
@@ -23,6 +24,12 @@ class Category
      */
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'category')]
     private Collection $posts;
+
+    #[ORM\Column(type:"datetime",nullable:true)]
+    protected $created;
+
+    #[ORM\Column(type:"datetime", nullable:true)]
+    protected $updated;
 
     public function __construct()
     {
@@ -79,5 +86,17 @@ class Category
     public function __toString()
     {
         return $this->name;
+    }
+
+    #[ORM\PrePersist]
+    public function onPrePersist()
+    {
+        $this->created = new \DateTime("now");
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate()
+    {
+        $this->updated = new \DateTime("now");
     }
 }

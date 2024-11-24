@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Post
 {
     #[ORM\Id]
@@ -35,6 +36,12 @@ class Post
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'posts')]
     private Collection $tags;
+
+    #[ORM\Column(type:"datetime",nullable:true)]
+    protected $created;
+
+    #[ORM\Column(type:"datetime", nullable:true)]
+    protected $updated;
 
     public function __construct()
     {
@@ -119,5 +126,17 @@ class Post
         }
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function onPrePersist()
+    {
+        $this->created = new \DateTime("now");
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate()
+    {
+        $this->updated = new \DateTime("now");
     }
 }
