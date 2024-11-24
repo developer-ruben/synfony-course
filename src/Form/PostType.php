@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -20,6 +21,7 @@ class PostType extends AbstractType
         $builder
             ->add('title', TextType::class, ['attr' => ['class' => 'form-control mb-2'], 'required' => false])
             ->add('category', EntityType::class,  ['class' => Category::class, 'attr' => ['class' => 'form-control mb-2']])
+            ->add('tags', EntityType::class,  ['class' => Tag::class, 'attr' => ['class' => 'form-control mb-2'], 'multiple' => true])
             ->add('body', TextareaType::class, ['attr' => ['class' => 'form-control mb-2']])
             ->add('image', FileType::class, ['attr' => ['class' => 'form-control mb-2'], 'data_class' => null, 'required' => false, 'mapped' => false])
             ->add('Save', SubmitType::class,[

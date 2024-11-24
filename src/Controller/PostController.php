@@ -57,7 +57,6 @@ class PostController extends AbstractController
                 $post->setImage($fileName);
             }
 
-
             $this->em->flush();
 
             $this->addFlash('success', 'Your post has been updated');
