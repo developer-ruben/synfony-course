@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Tag;
-use App\Form\CategoryType;
 use App\Form\TagType;
-use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -84,20 +81,15 @@ class TagController extends AbstractController
     }
 
         #[Route('/delete/{id}', name: 'delete')]
-    public function delete(CategoryRepository $categoryRepository, $id): Response
+    public function delete(TagRepository $tagRepository, $id): Response
     {
-        $category = $categoryRepository->find($id);
+        $tag = $tagRepository->find($id);
 
-        $posts = $category->getPosts();
-        foreach ($posts as $post) {
-            $post->setCategory(null);
-        }
-
-        $this->em->remove($category);
+        $this->em->remove($tag);
         $this->em->flush();
 
-        $this->addFlash('success', 'Your category has been removed');
+        $this->addFlash('success', 'Your tag has been removed');
 
-        return $this->redirectToRoute('category.index');
+        return $this->redirectToRoute('tag.index');
     }
 }
