@@ -31,9 +31,7 @@
             <td>{{ category.posts|length  }}</td>
             <td>
                 <a class="btn btn-sm btn-warning" href="{{ path('category.edit', {id:category.id}) }}">Edit</a>
-                {% if category.posts|length == 0 %}
-                    <a class="btn btn-sm btn-danger" href="{{ path('category.delete', {id:category.id}) }}">Delete</a>
-                {% endif %}
+                <a class="btn btn-sm btn-danger" href="{{ path('category.delete', {id:category.id}) }}">Delete</a>
             </td>
         </tr>
     {% endfor %}

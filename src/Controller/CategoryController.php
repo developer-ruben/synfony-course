@@ -85,6 +85,11 @@ class CategoryController extends AbstractController
     {
         $category = $categoryRepository->find($id);
 
+        $posts = $category->getPosts();
+        foreach ($posts as $post) {
+            $post->setCategory(null);
+        }
+
         $this->em->remove($category);
         $this->em->flush();
 
